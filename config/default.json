@@ -1,0 +1,9 @@
+{
+  "feeds": [
+    { "url": "http://emoncms.org/input/post.json", "key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" }
+  ],
+  "nodes": {
+    "electricity": 30,
+    "heating": 31
+  }
+}
