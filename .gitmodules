@@ -1,0 +1,3 @@
+[submodule "node-owlintuition"]
+	path = node-owlintuition
+	url = git@github.com:jeremypoulter/node-owlintuition.git
