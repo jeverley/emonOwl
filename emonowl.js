@@ -1,4 +1,4 @@
-var OWL = require('./node-owlintuition/owl.js');
+var OWL = require('node-owlintuition');
 var util = require('util');
 var http = require('http');
 var url = require('url');
