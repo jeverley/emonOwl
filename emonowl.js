@@ -40,17 +40,15 @@ owl.on('electricity', function( event ) {
   data = JSON.parse(event);
   log( "electricity = " + util.inspect(data, {"depth": null}) );
   packet = {
-    power1: data.channels['0'][0].current,
-    power2: data.channels['1'][0].current,
     signalRssi: data.signal.rssi, 
     signalLqi: data.signal.lqi,
     battery: data.battery,
-    ch1Current: data.channels['0'][0].current,
-    ch2Current: data.channels['1'][0].current,
-    ch3Current: data.channels['2'][0].current,
-    ch1Day: data.channels['0'][1].day,
-    ch2Day: data.channels['1'][1].day,
-    ch3Day: data.channels['2'][1].day
+    power1: data.channels['0'][0].current,
+    power2: data.channels['1'][0].current,
+    power3: data.channels['2'][0].current,
+    day1: data.channels['0'][1].day,
+    day2: data.channels['1'][1].day,
+    day3: data.channels['2'][1].day
   }
   reportToEmon(nodes.electricity, packet);
 });
@@ -67,12 +65,10 @@ owl.on('solar', function( event ) {
   }
   packet = {
     power2: data.current[0].generating,
-    ch2Current: data.current[0].generating,
-    ch2Day: data.day[0].generated,
+    day2: data.day[0].generated,
   }
   reportToEmon(nodes.solar, packet);
 });
-
 
 // Handle the heating event.
 //
