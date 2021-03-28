@@ -24,7 +24,7 @@
   "homepage": "https://github.com/jeremypoulter/emonOwl#readme",
   "dependencies": {
     "config": "^1.14.0",
-    "owlintuition": "git+https://github.com/jeremypoulter/node-owlintuition.git",
+    "owlintuition": "git+https://github.com/jeverley/node-owlintuition.git",
     "xml2json": "^0.7.1"
   }
 }
