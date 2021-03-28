@@ -40,6 +40,8 @@ owl.on('electricity', function( event ) {
   data = JSON.parse(event);
   log( "electricity = " + util.inspect(data, {"depth": null}) );
   packet = {
+    power1: data.channels['0'][0].current,
+    power2: data.channels['1'][0].current,
     signalRssi: data.signal.rssi, 
     signalLqi: data.signal.lqi,
     battery: data.battery,
@@ -56,11 +58,21 @@ owl.on('electricity', function( event ) {
 // Handle the solar event
 //
 // A simplified version of the electricity event with just the PV generation and 
-// consumption data. Since all this is in the electicity event we do not need to 
-// do anything with this event.
-owl.on('solar', function (event) {
-    log("solar = " + util.inspect(JSON.parse(event), { "depth": null }));
+// consumption data. Zero out negative day generated values (Network OWL bug).
+owl.on('solar', function( event ) {
+  data = JSON.parse(event);
+  log( "solar = " + util.inspect(data, {"depth": null}) );
+  if (data.day[0].generated < 0) {
+    data.day[0].generated = 0
+  }
+  packet = {
+    power2: data.current[0].generating,
+    ch2Current: data.current[0].generating,
+    ch2Day: data.day[0].generated,
+  }
+  reportToEmon(nodes.solar, packet);
 });
+
 
 // Handle the heating event.
 //
