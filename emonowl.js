@@ -46,9 +46,6 @@ owl.on('electricity', function( event ) {
     power1: data.channels['0'][0].current,
     power2: data.channels['1'][0].current,
     power3: data.channels['2'][0].current,
-    day1: data.channels['0'][1].day,
-    day2: data.channels['1'][1].day,
-    day3: data.channels['2'][1].day
   }
   reportToEmon(nodes.electricity, packet);
 });
@@ -56,16 +53,16 @@ owl.on('electricity', function( event ) {
 // Handle the solar event
 //
 // A simplified version of the electricity event with just the PV generation and 
-// consumption data. Zero out negative day generated values (Network OWL bug).
+// consumption data, export reported as power4 input.
 owl.on('solar', function( event ) {
   data = JSON.parse(event);
   log( "solar = " + util.inspect(data, {"depth": null}) );
-  if (data.day[0].generated < 0) {
-    data.day[0].generated = 0
-  }
   packet = {
     power2: data.current[0].generating,
-    day2: data.day[0].generated,
+    power4: data.current[1].exporting,
+  }
+  if (data.current[1].exporting > 0) {
+    packet["power1"] = data.current[0].generating - data.current[1].exporting
   }
   reportToEmon(nodes.solar, packet);
 });
